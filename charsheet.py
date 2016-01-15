@@ -1,13 +1,19 @@
-class charSheet:
+from math import floor
+from deities import *
 
-    def __init__(self):
+class CharSheet:
+
+    def __init__(self, char_name, deity_name):
         #Instanzvariablen festlegen
         #Dem Konstruktor als args mitgeben oder nicht ?
-        self.name = '' 
+
+        #Konvention: Methoden Testen Argumente, wenn Argument nicht Anwendbar -> None
+        #To-Do: Exception handling
+
+        self.name = self.set_name(char_name)
         self.age = 0
         self.size = 0
-        self.deity = '' #Wie festlegen was uebergeben werden darf ?
-                        #Durch Funktionen abkapseln ?
+        self.deity = self.set_deity(deity_name) #Wie festlegen was uebergeben werden darf ? Durch Funktionen abkapseln ?
         self.alignment = '' # Evtl sowas durch enumerate() von einer Liste übergeben ? (Anstatt str)
         self.homeland = ''
         self.race = ''
@@ -16,14 +22,11 @@ class charSheet:
         self.hair = ''
         self.eyes = ''
         self.level = 0
-
         self.hitpoints = 0 #hitpoints total
         self.wounds = 0 # damage taken
         self.nonlethal_damage = 0 #nonlethal damage taken
-
         self.initiative = 0 # wuerde dann mit modifier(self.attributes["Dexterity"]) + misc_modifier
                                                                     #Was auch immer das ist ^
-
         self.armor_class = 0       #Armor classes
         self.touch_armor_class = 0
         self.flat_footed_ac = 0
@@ -100,5 +103,47 @@ class charSheet:
                 #hier Buff-objekte einreihen
                 ]
 
+        self.spells_per_day = {
+                #Lvl:Anzahl
+                0: 0,
+                1: 0,
+                2: 0,
+                3: 0,
+                4: 0,
+                5: 0,
+                6: 0,
+                7: 0,
+                8: 0,
+                9: 0
+                }
+
+        self.spells = [
+                #Wirkbare Zauber hier einfügen
+                ]
+
+        self.feats = [
+                #hier Feat-Objekte einreihen
+                ]
+
+        self.gear = [
+                #hier Item-Objekte oder Vererbungen dieser einfügen
+                ]
+
+    #Hier Uebergreifende quasi Konstanten festlegen
+    #Deities werden ausgelager, da fickend lange Liste
+    #from deities import ...
+
+
+    #Hier Hilfsfunktionen
     def modifier(attr):
         return floor((attr - 10) / 2)
+
+    #Hier set-Funktionen, die Eingaben ueberpruefen (spaeter)
+    def set_deity(self, name): #Hier vielleicht noch Schutz gegen falsches Aufrufen 
+        return Deity.get_deity(name)
+
+    def set_name(self, name):
+        return name
+
+
+
